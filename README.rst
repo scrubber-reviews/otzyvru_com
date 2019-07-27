@@ -3,11 +3,8 @@ Otzyvru com
 ===========
 
 
-.. image:: https://img.shields.io/pypi/v/otzyvru_com.svg
-        :target: https://pypi.python.org/pypi/otzyvru_com
-
-.. image:: https://img.shields.io/travis/NMelis/otzyvru_com.svg
-        :target: https://travis-ci.org/NMelis/otzyvru_com
+.. image:: https://img.shields.io/pypi/v/otzyvru-com.svg
+        :target: https://pypi.python.org/pypi/otzyvru-com
 
 .. image:: https://readthedocs.org/projects/otzyvru-com/badge/?version=latest
         :target: https://otzyvru-com.readthedocs.io/en/latest/?badge=latest
