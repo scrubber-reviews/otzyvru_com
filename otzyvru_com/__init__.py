@@ -11,4 +11,4 @@ __description__ = 'Otzyvru Первый независимый сайт отзы
 
 from .otzyvru_com import OtzyvruCom
 
-scrubber = OtzyvruCom
+provider = OtzyvruCom

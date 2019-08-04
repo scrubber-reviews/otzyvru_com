@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
 
 """Main module."""
+import datetime
 import json
 import re
 import time
 from urllib.parse import urljoin
 
+import pytz as pytz
 import requests
 from bs4 import BeautifulSoup
 
-from otzyvru_com.messages import (
-    SCRUBBER_IS_STARTED, SCRUBBER_IS_FINISHED, STOP_BY_LIMIT
-)
+SCRUBBER_IS_STARTED = 'Scrubber is started'
+SCRUBBER_IS_FINISHED = 'Scrubber is finished'
+STOP_BY_LIMIT = 'Scrubber is stop by limit'
 
 
 class _Logger:
@@ -24,9 +26,10 @@ class _Logger:
     def send_error(self, message):
         print('ERROR: ' + message)
 
+
 class OtzyvruCom(object):
     BASE_URL = 'https://www.otzyvru.com'
-    comments = []
+    reviews = []
     show_count = 0
     count = 0
     logger = None
@@ -49,9 +52,9 @@ class OtzyvruCom(object):
 
         self.count = int(one_page.select_one('div.rtngdescr>span.count').text)
         page += 1
-        self._collect_comments(one_page)
+        self.reviews.extend(self._collect_comments(one_page))
         while True:
-            if limit and limit <= len(self.comments):
+            if limit and limit <= len(self.reviews):
                 self.logger.send_info(STOP_BY_LIMIT)
                 break
             self.logger.send_info('scrubbing page: %s...' % page)
@@ -59,7 +62,7 @@ class OtzyvruCom(object):
             page_result = self._get_page(page)
             if len(page_result.select('div.commentbox')) == 0:
                 break
-            self.comments.extend(self._collect_comments(self._get_page(page)))
+            self.reviews.extend(self._collect_comments(self._get_page(page)))
             page += 1
         self.logger.send_info(SCRUBBER_IS_FINISHED)
         return self
@@ -80,7 +83,7 @@ class OtzyvruCom(object):
         return soup
 
     def _parse_comment(self, soup_comment):
-        new_comment = Comment()
+        new_comment = Review()
         new_comment.author = self._get_author_of_comment(soup_comment)
         try:
             new_comment.id = int(re.search(r'\d+',
@@ -194,7 +197,7 @@ class Author:
     name = ''
 
 
-class Comment:
+class Review:
 
     def __init__(self):
         self.rating = Rating()
@@ -208,6 +211,11 @@ class Comment:
         self.sub_comments = list()
         self.plus = 0
         self.minus = 0
+
+    def get_text(self):
+        return 'Текст: {}\n Плюсы: {}\n Минусы: {}'.format(
+            self.text, '\n'.join(self.advantages), '\n'.join(self.disadvantages)
+        )
 
     def __str__(self):
         if self.title:
