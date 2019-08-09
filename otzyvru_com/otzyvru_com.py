@@ -7,7 +7,6 @@ import re
 import time
 from urllib.parse import urljoin
 
-import pytz as pytz
 import requests
 from bs4 import BeautifulSoup
 
@@ -192,9 +191,20 @@ class Rating:
     average_rating = ''
     on_scale = 5
 
+    def get_dict(self):
+        return {
+            'average_rating': self.average_rating,
+            'on_scale': self.on_scale,
+        }
+
 
 class Author:
     name = ''
+
+    def get_dict(self):
+        return {
+            'name': self.name,
+        }
 
 
 class Review:
@@ -205,7 +215,7 @@ class Review:
         self.title = ''
         self.text = ''
         self.date = ''
-        self.author = ''
+        self.author = Author()
         self.advantages = list()
         self.disadvantages = list()
         self.sub_comments = list()
@@ -216,6 +226,21 @@ class Review:
         return 'Текст: {}\n Плюсы: {}\n Минусы: {}'.format(
             self.text, '\n'.join(self.advantages), '\n'.join(self.disadvantages)
         )
+
+    def get_dict(self):
+        return {
+            'id': self.id,
+            'rating': self.rating.get_dict(),
+            'title': self.title,
+            'text': self.text,
+            'date': self.date,
+            'author': self.author.get_dict(),
+            'advantages': self.advantages,
+            'disadvantages': self.disadvantages,
+            'plus': self.plus,
+            'minus': self.minus,
+            'sub_comments': [r.get_dict() for r in self.sub_comments],
+        }
 
     def __str__(self):
         if self.title:
