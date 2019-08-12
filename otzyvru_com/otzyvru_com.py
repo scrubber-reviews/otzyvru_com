@@ -189,12 +189,16 @@ class OtzyvruCom(object):
 
 class Rating:
     average_rating = ''
-    on_scale = 5
+    min_scale = 5
+    max_scale = 5
+
+    on_scale = 5  # Deprecated
 
     def get_dict(self):
         return {
             'average_rating': self.average_rating,
-            'on_scale': self.on_scale,
+            'min_scale': self.min_scale,
+            'on_scale': self.max_scale,
         }
 
 
@@ -208,8 +212,6 @@ class Author:
 
 
 class Review:
-    min_scale = 5
-    max_scale = 5
 
     def __init__(self):
         self.rating = Rating()
