@@ -208,6 +208,8 @@ class Author:
 
 
 class Review:
+    min_scale = 5
+    max_scale = 5
 
     def __init__(self):
         self.rating = Rating()
@@ -254,3 +256,9 @@ class Review:
         return self.text[:50] + '...'
 
 
+if __name__ == '__main__':
+    prov = OtzyvruCom('mtt-mejregionalniy-tranzittelekom')
+    prov.start()
+
+    for r in prov.reviews:
+        print(r.get_dict())
