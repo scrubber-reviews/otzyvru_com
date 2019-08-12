@@ -4,7 +4,7 @@
 
 __author__ = """NMelis"""
 __email__ = 'melis.zhoroev@gmail.com'
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 __title__ = 'Otzyv'
 __description__ = 'Otzyvru Первый независимый сайт отзывов России'
 __slug_img_link__ = 'https://i.ibb.co/fDsDyQv/image.png'
@@ -13,6 +13,7 @@ Slug это символы после "/" (слеша) в конце url https:/
 <img src="https://i.ibb.co/fDsDyQv/image.png" alt="image" border="0">
 """
 
-from .otzyvru_com import OtzyvruCom
+from .otzyvru_com import OtzyvruCom, Rating
 
 provider = OtzyvruCom
+rating = Rating
