@@ -4,7 +4,7 @@
 
 __author__ = """NMelis"""
 __email__ = 'melis.zhoroev@gmail.com'
-__version__ = '0.1.9'
+__version__ = '0.1.10'
 __title__ = 'Otzyv'
 __description__ = 'Otzyvru Первый независимый сайт отзывов России'
 __slug_img_link__ = 'https://i.ibb.co/fDsDyQv/image.png'

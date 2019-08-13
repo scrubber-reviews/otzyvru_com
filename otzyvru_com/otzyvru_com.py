@@ -188,8 +188,8 @@ class OtzyvruCom(object):
 
 
 class Rating:
-    average_rating = ''
-    min_scale = 5
+    average_rating = None
+    min_scale = 1
     max_scale = 5
 
     on_scale = 5  # Deprecated
